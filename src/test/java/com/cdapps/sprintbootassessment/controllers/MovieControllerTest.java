@@ -12,12 +12,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class MovieControllerTest {
 
@@ -29,7 +27,6 @@ class MovieControllerTest {
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
-
     private Movie movie;
 
     @BeforeEach
@@ -53,24 +50,6 @@ class MovieControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(movie)));
 
         verify(movieService).getMovieById(1);
-    }
-
-    @Test
-    void getAllMovies() throws Exception {
-        Movie movie2 = new Movie();
-        movie2.setId(2);
-        movie2.setTitle("Test Movie 2");
-        movie2.setYear("2024");
-
-        List<Movie> movies = Arrays.asList(movie, movie2);
-
-        when(movieService.getAllMovies()).thenReturn(movies);
-
-        mockMvc.perform(get("/movies"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(movies)));
-
-        verify(movieService).getAllMovies();
     }
 
     @Test

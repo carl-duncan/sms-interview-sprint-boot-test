@@ -2,6 +2,9 @@ package com.cdapps.sprintbootassessment.dao.impl;
 
 import com.cdapps.sprintbootassessment.dao.MovieDao;
 import com.cdapps.sprintbootassessment.models.Movie;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -32,9 +35,14 @@ public class MovieDaoJdbcImpl implements MovieDao {
     }
 
     @Override
-    public List<Movie> getAllMovies() {
-        String sql = "SELECT * FROM movies";
-        return jdbcTemplate.query(sql, movieMapper);
+    public Page<Movie> getAllMovies(Pageable pageable) {
+        String sql = "SELECT * FROM movies ORDER BY id ASC LIMIT ? OFFSET ?";
+        List<Movie> movies = jdbcTemplate.query(sql, movieMapper, pageable.getPageSize(), pageable.getOffset());
+
+        String countSql = "SELECT count(*) FROM movies";
+        Integer total = jdbcTemplate.queryForObject(countSql, Integer.class);
+
+        return new PageImpl<>(movies, pageable, total);
     }
 
     @Override

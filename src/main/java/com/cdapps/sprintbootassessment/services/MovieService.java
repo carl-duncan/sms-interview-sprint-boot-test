@@ -3,9 +3,9 @@ package com.cdapps.sprintbootassessment.services;
 import com.cdapps.sprintbootassessment.dao.MovieDao;
 import com.cdapps.sprintbootassessment.models.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class MovieService {
@@ -21,8 +21,8 @@ public class MovieService {
         return movieDao.getMovieById(id);
     }
 
-    public List<Movie> getAllMovies() {
-        return movieDao.getAllMovies();
+    public Page<Movie> getAllMovies(Pageable pageable) {
+        return movieDao.getAllMovies(pageable);
     }
 
     public void saveMovie(Movie movie) {
