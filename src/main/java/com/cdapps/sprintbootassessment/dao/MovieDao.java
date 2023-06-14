@@ -1,13 +1,14 @@
 package com.cdapps.sprintbootassessment.dao;
 
 import com.cdapps.sprintbootassessment.models.Movie;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface MovieDao {
 
     Movie getMovieById(int id);
 
-    List<Movie> getAllMovies();
+    Page<Movie> getAllMovies(Pageable pageable);
 
     void saveMovie(Movie movie);
 

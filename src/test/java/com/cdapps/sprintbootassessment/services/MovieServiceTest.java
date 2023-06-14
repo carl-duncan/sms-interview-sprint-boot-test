@@ -6,11 +6,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class MovieServiceTest {
@@ -44,17 +44,14 @@ class MovieServiceTest {
 
     @Test
     void getAllMovies() {
-        Movie movie2 = new Movie();
-        movie2.setId(2);
-        movie2.setTitle("Movie Title 2");
-        movie2.setYear("2023");
-        List<Movie> movies = Arrays.asList(movie, movie2);
-        when(movieDao.getAllMovies()).thenReturn(movies);
+        Page<Movie> movies = mock(Page.class);
+        Pageable pageable = PageRequest.of(0, 5);
+        when(movieDao.getAllMovies(pageable)).thenReturn(movies);
 
-        List<Movie> result = movieService.getAllMovies();
+        Page<Movie> result = movieService.getAllMovies(pageable);
 
         assertEquals(movies, result);
-        verify(movieDao).getAllMovies();
+        verify(movieDao).getAllMovies(pageable);
     }
 
 

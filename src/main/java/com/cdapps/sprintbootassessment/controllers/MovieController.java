@@ -3,9 +3,9 @@ package com.cdapps.sprintbootassessment.controllers;
 import com.cdapps.sprintbootassessment.models.Movie;
 import com.cdapps.sprintbootassessment.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
@@ -24,8 +24,8 @@ public class MovieController {
     }
 
     @GetMapping
-    public List<Movie> getAllMovies() {
-        return movieService.getAllMovies();
+    public Page<Movie> getAllMovies(Pageable pageable) {
+        return movieService.getAllMovies(pageable);
     }
 
     @PostMapping

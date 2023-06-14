@@ -6,10 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 class MovieDaoJdbcImplTest {
 
     @Mock
-    private JdbcTemplate jdbcTemplate;
+    private static JdbcTemplate jdbcTemplate;
     private MovieDaoJdbcImpl movieDao;
     private static Movie movie;
 
@@ -49,17 +49,15 @@ class MovieDaoJdbcImplTest {
 
     @Test
     void getAllMovies() {
-        Movie movie2 = new Movie();
-        movie2.setId(2);
-        movie2.setTitle("Test Movie 2");
-        movie2.setYear("2023");
-        List<Movie> movies = Arrays.asList(movie, movie2);
-        when(jdbcTemplate.query(anyString(), any(RowMapper.class))).thenReturn(movies);
+        final int pageSize = 10;
+        when(jdbcTemplate.query(anyString(), any(RowMapper.class), anyInt(), anyInt())).thenReturn(List.of(movie));
+        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class))).thenReturn(1);
+        final Pageable pageable = Pageable.ofSize(pageSize);
 
-        List<Movie> result = movieDao.getAllMovies();
+        var result = movieDao.getAllMovies(pageable);
 
-        assertEquals(movies, result);
-        verify(jdbcTemplate).query(anyString(), any(RowMapper.class));
+        assertEquals(1, result.getTotalElements());
+        assertEquals(1, result.getTotalPages());
     }
 
     @Test
