@@ -62,4 +62,22 @@ public class MovieDaoJdbcImpl implements MovieDao {
         String sql = "DELETE FROM movies WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
+
+    @Override
+    public Page<Movie> getMoviesByStarId(int starId, Pageable pageable) {
+        String sql = "SELECT m.* FROM movies m INNER JOIN stars s ON m.id = s.movie_id WHERE s.person_id = ?";
+        String countSql = "SELECT COUNT(*) FROM movies m INNER JOIN stars s ON m.id = s.movie_id WHERE s.person_id = ?";
+        List<Movie> movies = jdbcTemplate.query(sql + " LIMIT ? OFFSET ?", movieMapper, starId, pageable.getPageSize(), pageable.getOffset());
+        int total = jdbcTemplate.queryForObject(countSql, Integer.class, starId);
+        return new PageImpl<>(movies, pageable, total);
+    }
+
+    @Override
+    public Page<Movie> getMoviesByDirectorId(int directorId, Pageable pageable) {
+        String sql = "SELECT m.* FROM movies m INNER JOIN directors d ON m.id = d.movie_id WHERE d.person_id = ?";
+        String countSql = "SELECT COUNT(*) FROM movies m INNER JOIN directors d ON m.id = d.movie_id WHERE d.person_id = ?";
+        List<Movie> movies = jdbcTemplate.query(sql + " LIMIT ? OFFSET ?", movieMapper, directorId, pageable.getPageSize(), pageable.getOffset());
+        int total = jdbcTemplate.queryForObject(countSql, Integer.class, directorId);
+        return new PageImpl<>(movies, pageable, total);
+    }
 }

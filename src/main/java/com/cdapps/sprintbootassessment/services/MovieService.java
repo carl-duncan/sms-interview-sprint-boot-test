@@ -36,4 +36,12 @@ public class MovieService {
     public void deleteMovie(int id) {
         movieDao.deleteMovie(id);
     }
+
+    public Page<Movie> getMoviesByDirectorId(int directorId, Pageable pageable){
+        return movieDao.getMoviesByDirectorId(directorId, pageable);
+    }
+
+    public Page<Movie> getMoviesByStarId(int starId, Pageable pageable){
+        return movieDao.getMoviesByStarId(starId, pageable);
+    }
 }

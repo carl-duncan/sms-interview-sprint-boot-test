@@ -75,4 +75,34 @@ class MovieServiceTest {
 
         verify(movieDao).deleteMovie(1);
     }
+
+    @Test
+    void getMoviesByDirectorId() {
+        final int directorId = 1;
+        final int pageSize = 10;
+        final int offset = 0;
+        Page<Movie> movies = mock(Page.class);
+        Pageable pageable = PageRequest.of(offset, pageSize);
+        when(movieDao.getMoviesByDirectorId(eq(directorId), eq(pageable))).thenReturn(movies);
+
+        Page<Movie> result = movieService.getMoviesByDirectorId(directorId, pageable);
+
+        assertEquals(movies, result);
+        verify(movieDao).getMoviesByDirectorId(eq(directorId), eq(pageable));
+    }
+
+    @Test
+    void getMoviesByStarId() {
+        final int starId = 1;
+        final int pageSize = 10;
+        final int offset = 0;
+        Page<Movie> movies = mock(Page.class);
+        Pageable pageable = PageRequest.of(offset, pageSize);
+        when(movieDao.getMoviesByStarId(eq(starId), eq(pageable))).thenReturn(movies);
+
+        Page<Movie> result = movieService.getMoviesByStarId(starId, pageable);
+
+        assertEquals(movies, result);
+        verify(movieDao).getMoviesByStarId(eq(starId), eq(pageable));
+    }
 }

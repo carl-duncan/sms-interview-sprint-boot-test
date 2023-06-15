@@ -42,4 +42,14 @@ public class MovieController {
     public void deleteMovie(@PathVariable int id) {
         movieService.deleteMovie(id);
     }
+
+    @GetMapping("/director/{directorId}")
+    public Page<Movie> getMoviesByDirectorId(@PathVariable int directorId, Pageable pageable){
+        return movieService.getMoviesByDirectorId(directorId, pageable);
+    }
+
+    @GetMapping("/star/{starId}")
+    public Page<Movie> getMoviesByStarId(@PathVariable int starId, Pageable pageable){
+        return movieService.getMoviesByStarId(starId, pageable);
+    }
 }
