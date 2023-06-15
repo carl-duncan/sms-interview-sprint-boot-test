@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -81,5 +83,41 @@ class MovieDaoJdbcImplTest {
         movieDao.deleteMovie(movie.getId());
 
         verify(jdbcTemplate).update(anyString(), eq(movie.getId()));
+    }
+
+    @Test
+    void getMoviesByStarId() {
+        final int starId = 1;
+        final int pageSize = 10;
+        final int offset = 0;
+
+        when(jdbcTemplate.query(anyString(), any(RowMapper.class), any(), any(), any())).thenReturn(List.of(movie));
+        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), eq(starId))).thenReturn(1);
+
+        final Pageable pageable = PageRequest.of(offset, pageSize);
+
+        Page<Movie> result = movieDao.getMoviesByStarId(starId, pageable);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(1, result.getTotalPages());
+        assertEquals(movie, result.getContent().get(0));
+    }
+
+    @Test
+    void getMoviesByDirectorId() {
+        final int directorId = 1;
+        final int pageSize = 10;
+        final int offset = 0;
+
+        when(jdbcTemplate.query(anyString(), any(RowMapper.class), any(), any(), any())).thenReturn(List.of(movie));
+        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), eq(directorId))).thenReturn(1);
+
+        final Pageable pageable = PageRequest.of(offset, pageSize);
+
+        Page<Movie> result = movieDao.getMoviesByDirectorId(directorId, pageable);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(1, result.getTotalPages());
+        assertEquals(movie, result.getContent().get(0));
     }
 }

@@ -15,4 +15,8 @@ public interface MovieDao {
     void updateMovie(Movie movie);
 
     void deleteMovie(int id);
+
+    Page<Movie> getMoviesByStarId(int starId, Pageable pageable);
+
+    Page<Movie> getMoviesByDirectorId(int directorId, Pageable pageable);
 }
