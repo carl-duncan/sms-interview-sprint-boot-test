@@ -75,4 +75,16 @@ class PeopleServiceTest {
 
         verify(peopleDao).deletePerson(1);
     }
+
+    @Test
+    void searchPeopleByName() {
+        Page<People> peoplePage = mock(Page.class);
+        Pageable pageable = PageRequest.of(0, 5);
+        when(peopleDao.searchPeopleByName("John Doe", pageable)).thenReturn(peoplePage);
+
+        Page<People> result = peopleService.searchPeopleByName("John Doe", pageable);
+
+        assertEquals(peoplePage, result);
+        verify(peopleDao).searchPeopleByName("John Doe", pageable);
+    }
 }

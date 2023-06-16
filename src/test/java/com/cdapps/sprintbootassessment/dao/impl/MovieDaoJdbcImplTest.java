@@ -173,4 +173,22 @@ class MovieDaoJdbcImplTest {
         assertEquals(1, result.getTotalElements());
         assertEquals(1, result.getTotalPages());
     }
+
+    @Test
+    void searchMoviesByTitle() {
+        final int pageSize = 10;
+        String title = "Test";
+        when(jdbcTemplate.query(anyString(), any(RowMapper.class), anyString(), anyInt(), anyInt()))
+                .thenReturn(List.of(movie));
+        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), anyString()))
+                .thenReturn(1);
+        final Pageable pageable = Pageable.ofSize(pageSize);
+
+        var result = movieDao.searchMoviesByTitle(title, pageable);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(1, result.getTotalPages());
+        verify(jdbcTemplate).query(anyString(), any(RowMapper.class), eq("%" + title + "%"), eq(pageSize), eq(pageable.getOffset()));
+        verify(jdbcTemplate).queryForObject(anyString(), eq(Integer.class), eq("%" + title + "%"));
+    }
 }

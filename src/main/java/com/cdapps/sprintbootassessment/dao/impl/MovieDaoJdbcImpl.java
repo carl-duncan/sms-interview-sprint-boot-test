@@ -130,4 +130,15 @@ public class MovieDaoJdbcImpl implements MovieDao {
 
         return new PageImpl<>(ratings, pageable, total);
     }
+
+    @Override
+    public Page<Movie> searchMoviesByTitle(String title, Pageable pageable) {
+        String titlePattern = "%" + title + "%";
+        String sql = "SELECT * FROM movies WHERE title LIKE ?";
+        String countSql = "SELECT COUNT(*) FROM movies WHERE title LIKE ?";
+        List<Movie> movies = jdbcTemplate.query(sql + " LIMIT ? OFFSET ?", movieMapper, titlePattern, pageable.getPageSize(), pageable.getOffset());
+        int total = jdbcTemplate.queryForObject(countSql, Integer.class, titlePattern);
+
+        return new PageImpl<>(movies, pageable, total);
+    }
 }

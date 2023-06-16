@@ -27,4 +27,6 @@ public interface MovieDao {
     Page<People> getDirectorsByMovieId(int movieId, Pageable pageable);
 
     Page<Rating> getRatingsByMovieId(int movieId, Pageable pageable);
+
+    Page<Movie> searchMoviesByTitle(String title, Pageable pageable);
 }

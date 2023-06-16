@@ -58,4 +58,8 @@ public class MovieService {
     public Page<Rating> getRatingsByMovieId(int movieId, Pageable pageable){
         return movieDao.getRatingsByMovieId(movieId, pageable);
     }
+
+    public Page<Movie> searchMoviesByTitle(String title, Pageable pageable){
+        return movieDao.searchMoviesByTitle(title, pageable);
+    }
 }

@@ -15,4 +15,6 @@ public interface PeopleDao {
     void updatePerson(People person);
 
     void deletePerson(int id);
+
+    Page<People> searchPeopleByName(String name, Pageable pageable);
 }

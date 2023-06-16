@@ -83,4 +83,23 @@ class PeopleDaoJdbcImplTest {
 
         verify(jdbcTemplate).update(anyString(), eq(people.getId()));
     }
+
+    @Test
+    void searchPeopleByName() {
+        final int pageSize = 10;
+        String name = "John";
+        when(jdbcTemplate.query(anyString(), any(RowMapper.class), anyString(), anyInt(), anyInt()))
+                .thenReturn(List.of(people));
+        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), anyString()))
+                .thenReturn(1);
+        final Pageable pageable = Pageable.ofSize(pageSize);
+
+        var result = peopleDao.searchPeopleByName(name, pageable);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(1, result.getTotalPages());
+        verify(jdbcTemplate).query(anyString(), any(RowMapper.class), eq("%" + name + "%"), eq(pageSize), eq(pageable.getOffset()));
+        verify(jdbcTemplate).queryForObject(anyString(), eq(Integer.class), eq("%" + name + "%"));
+    }
+
 }

@@ -42,4 +42,9 @@ public class PeopleController {
     public void deletePerson(@PathVariable int id) {
         peopleService.deletePerson(id);
     }
+
+    @GetMapping("/search")
+    public Page<People> searchPeopleByName(@RequestParam String name, Pageable pageable){
+        return peopleService.searchPeopleByName(name, pageable);
+    }
 }
