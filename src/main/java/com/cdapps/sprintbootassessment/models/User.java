@@ -1,9 +1,12 @@
 package com.cdapps.sprintbootassessment.models;
 
+import com.cdapps.sprintbootassessment.enums.Role;
+
 public class User {
     private int id;
     private String username;
     private String password;
+    private Role role;
 
     public int getId() {
         return id;
@@ -27,5 +30,12 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
