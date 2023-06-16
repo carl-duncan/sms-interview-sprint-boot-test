@@ -2,6 +2,8 @@ package com.cdapps.sprintbootassessment.services;
 
 import com.cdapps.sprintbootassessment.dao.MovieDao;
 import com.cdapps.sprintbootassessment.models.Movie;
+import com.cdapps.sprintbootassessment.models.People;
+import com.cdapps.sprintbootassessment.models.Rating;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -105,4 +107,44 @@ class MovieServiceTest {
         assertEquals(movies, result);
         verify(movieDao).getMoviesByStarId(eq(starId), eq(pageable));
     }
+
+    @Test
+    void getStarsByMovieId() {
+        final int movieId = 1;
+        Page<People> people = mock(Page.class);
+        Pageable pageable = PageRequest.of(0, 5);
+        when(movieDao.getStarsByMovieId(movieId, pageable)).thenReturn(people);
+
+        Page<People> result = movieService.getStarsByMovieId(movieId, pageable);
+
+        assertEquals(people, result);
+        verify(movieDao).getStarsByMovieId(movieId, pageable);
+    }
+
+    @Test
+    void getDirectorsByMovieId() {
+        final int movieId = 1;
+        Page<People> people = mock(Page.class);
+        Pageable pageable = PageRequest.of(0, 5);
+        when(movieDao.getDirectorsByMovieId(movieId, pageable)).thenReturn(people);
+
+        Page<People> result = movieService.getDirectorsByMovieId(movieId, pageable);
+
+        assertEquals(people, result);
+        verify(movieDao).getDirectorsByMovieId(movieId, pageable);
+    }
+
+    @Test
+    void getRatingsByMovieId() {
+        final int movieId = 1;
+        Page<Rating> ratings = mock(Page.class);
+        Pageable pageable = PageRequest.of(0, 5);
+        when(movieDao.getRatingsByMovieId(movieId, pageable)).thenReturn(ratings);
+
+        Page<Rating> result = movieService.getRatingsByMovieId(movieId, pageable);
+
+        assertEquals(ratings, result);
+        verify(movieDao).getRatingsByMovieId(movieId, pageable);
+    }
+
 }

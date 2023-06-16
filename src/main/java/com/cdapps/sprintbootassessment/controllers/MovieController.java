@@ -1,6 +1,8 @@
 package com.cdapps.sprintbootassessment.controllers;
 
 import com.cdapps.sprintbootassessment.models.Movie;
+import com.cdapps.sprintbootassessment.models.People;
+import com.cdapps.sprintbootassessment.models.Rating;
 import com.cdapps.sprintbootassessment.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,5 +53,20 @@ public class MovieController {
     @GetMapping("/star/{starId}")
     public Page<Movie> getMoviesByStarId(@PathVariable int starId, Pageable pageable){
         return movieService.getMoviesByStarId(starId, pageable);
+    }
+
+    @GetMapping("/{movieId}/stars")
+    public Page<People> getStarsByMovieId(@PathVariable int movieId, Pageable pageable){
+        return movieService.getStarsByMovieId(movieId, pageable);
+    }
+
+    @GetMapping("/{movieId}/directors")
+    public Page<People> getDirectorsByMovieId(@PathVariable int movieId, Pageable pageable){
+        return movieService.getDirectorsByMovieId(movieId, pageable);
+    }
+
+    @GetMapping("/{movieId}/ratings")
+    public Page<Rating> getRatingsByMovieId(@PathVariable int movieId, Pageable pageable){
+        return movieService.getRatingsByMovieId(movieId, pageable);
     }
 }

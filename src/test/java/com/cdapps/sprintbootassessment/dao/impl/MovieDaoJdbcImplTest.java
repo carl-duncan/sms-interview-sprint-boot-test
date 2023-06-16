@@ -1,6 +1,8 @@
 package com.cdapps.sprintbootassessment.dao.impl;
 
 import com.cdapps.sprintbootassessment.models.Movie;
+import com.cdapps.sprintbootassessment.models.People;
+import com.cdapps.sprintbootassessment.models.Rating;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -119,5 +121,56 @@ class MovieDaoJdbcImplTest {
         assertEquals(1, result.getTotalElements());
         assertEquals(1, result.getTotalPages());
         assertEquals(movie, result.getContent().get(0));
+    }
+
+    @Test
+    void getStarsByMovieId() {
+        final int movieId = 1;
+        final int pageSize = 10;
+        final int offset = 0;
+
+        when(jdbcTemplate.query(anyString(), any(RowMapper.class), any(), any(), any())).thenReturn(List.of(new People()));
+        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), eq(movieId))).thenReturn(1);
+
+        final Pageable pageable = PageRequest.of(offset, pageSize);
+
+        Page<People> result = movieDao.getStarsByMovieId(movieId, pageable);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(1, result.getTotalPages());
+    }
+
+    @Test
+    void getDirectorsByMovieId() {
+        final int movieId = 1;
+        final int pageSize = 10;
+        final int offset = 0;
+
+        when(jdbcTemplate.query(anyString(), any(RowMapper.class), any(), any(), any())).thenReturn(List.of(new People()));
+        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), eq(movieId))).thenReturn(1);
+
+        final Pageable pageable = PageRequest.of(offset, pageSize);
+
+        Page<People> result = movieDao.getDirectorsByMovieId(movieId, pageable);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(1, result.getTotalPages());
+    }
+
+    @Test
+    void getRatingsByMovieId() {
+        final int movieId = 1;
+        final int pageSize = 10;
+        final int offset = 0;
+
+        when(jdbcTemplate.query(anyString(), any(RowMapper.class), any(), any(), any())).thenReturn(List.of(new Rating()));
+        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), eq(movieId))).thenReturn(1);
+
+        final Pageable pageable = PageRequest.of(offset, pageSize);
+
+        Page<Rating> result = movieDao.getRatingsByMovieId(movieId, pageable);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(1, result.getTotalPages());
     }
 }

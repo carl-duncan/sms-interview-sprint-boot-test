@@ -2,6 +2,8 @@ package com.cdapps.sprintbootassessment.services;
 
 import com.cdapps.sprintbootassessment.dao.MovieDao;
 import com.cdapps.sprintbootassessment.models.Movie;
+import com.cdapps.sprintbootassessment.models.People;
+import com.cdapps.sprintbootassessment.models.Rating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,5 +45,17 @@ public class MovieService {
 
     public Page<Movie> getMoviesByStarId(int starId, Pageable pageable){
         return movieDao.getMoviesByStarId(starId, pageable);
+    }
+
+    public Page<People> getStarsByMovieId(int movieId, Pageable pageable){
+        return movieDao.getStarsByMovieId(movieId, pageable);
+    }
+
+    public Page<People> getDirectorsByMovieId(int movieId, Pageable pageable){
+        return movieDao.getDirectorsByMovieId(movieId, pageable);
+    }
+
+    public Page<Rating> getRatingsByMovieId(int movieId, Pageable pageable){
+        return movieDao.getRatingsByMovieId(movieId, pageable);
     }
 }
