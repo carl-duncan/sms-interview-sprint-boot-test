@@ -36,4 +36,8 @@ public class PeopleService {
     public void deletePerson(int id) {
         peopleDao.deletePerson(id);
     }
+
+    public Page<People> searchPeopleByName(String title, Pageable pageable){
+        return peopleDao.searchPeopleByName(title, pageable);
+    }
 }

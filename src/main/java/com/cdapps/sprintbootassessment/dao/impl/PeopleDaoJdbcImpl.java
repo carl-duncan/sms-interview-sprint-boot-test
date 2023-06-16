@@ -61,4 +61,15 @@ public class PeopleDaoJdbcImpl implements PeopleDao {
         String sql = "DELETE FROM people WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
+
+    @Override
+    public Page<People> searchPeopleByName(String name, Pageable pageable) {
+        String namePattern = "%" + name + "%";
+        String sql = "SELECT * FROM people WHERE name LIKE ? ORDER BY id ASC LIMIT ? OFFSET ?";
+        List<People> people = jdbcTemplate.query(sql, peopleMapper, namePattern, pageable.getPageSize(), pageable.getOffset());
+        String countSql = "SELECT count(*) FROM people WHERE name LIKE ?";
+        Integer total = jdbcTemplate.queryForObject(countSql, Integer.class, namePattern);
+
+        return new PageImpl<>(people, pageable, total);
+    }
 }

@@ -147,4 +147,17 @@ class MovieServiceTest {
         verify(movieDao).getRatingsByMovieId(movieId, pageable);
     }
 
+    @Test
+    void searchMoviesByTitle() {
+        final String title = "Test Movie";
+        Page<Movie> movies = mock(Page.class);
+        Pageable pageable = PageRequest.of(0, 5);
+        when(movieDao.searchMoviesByTitle(title, pageable)).thenReturn(movies);
+
+        Page<Movie> result = movieService.searchMoviesByTitle(title, pageable);
+
+        assertEquals(movies, result);
+        verify(movieDao).searchMoviesByTitle(title, pageable);
+    }
+
 }

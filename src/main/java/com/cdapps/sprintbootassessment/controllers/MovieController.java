@@ -69,4 +69,9 @@ public class MovieController {
     public Page<Rating> getRatingsByMovieId(@PathVariable int movieId, Pageable pageable){
         return movieService.getRatingsByMovieId(movieId, pageable);
     }
+
+    @GetMapping("/search")
+    public Page<Movie> searchMovieByTitle(@RequestParam String title, Pageable pageable){
+        return movieService.searchMoviesByTitle(title, pageable);
+    }
 }
