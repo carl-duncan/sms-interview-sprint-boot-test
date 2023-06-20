@@ -26,7 +26,7 @@ class MovieServiceTest {
         movie = new Movie();
         movie.setId(1);
         movie.setTitle("Test Movie");
-        movie.setYear("2023");
+        movie.setYear(2023);
     }
     @BeforeEach
     void setUp() {
