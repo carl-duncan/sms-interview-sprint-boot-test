@@ -10,16 +10,26 @@ sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/milestone" }
+    maven { url "https://repo.spring.io/snapshot" }
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter:3.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-web:3.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.0.4'
     implementation 'org.postgresql:postgresql:42.5.4'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
     developmentOnly 'org.springframework.boot:spring-boot-devtools:3.0.4'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.1.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.0'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2',
+            'io.jsonwebtoken:jjwt-jackson:0.11.2',
+            'org.apache.commons:commons-lang3:3.0'
+    implementation 'org.springframework.boot:spring-boot-starter-security:3.0.4'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
 }
 
 tasks.named('test') {

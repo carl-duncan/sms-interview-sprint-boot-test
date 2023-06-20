@@ -26,7 +26,7 @@ public class MovieDaoJdbcImpl implements MovieDao {
         Movie movie = new Movie();
         movie.setId(rs.getInt("id"));
         movie.setTitle(rs.getString("title"));
-        movie.setYear(rs.getString("year"));
+        movie.setYear(rs.getInt("year"));
 
         return movie;
     };
@@ -68,8 +68,8 @@ public class MovieDaoJdbcImpl implements MovieDao {
 
     @Override
     public void saveMovie(Movie movie) {
-        String sql = "INSERT INTO movies (title, year) VALUES (?, ?)";
-        jdbcTemplate.update(sql, movie.getTitle(), movie.getYear());
+        String sql = "INSERT INTO movies (id,title, year) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, movie.getId(),movie.getTitle(), movie.getYear());
     }
 
     @Override
