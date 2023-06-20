@@ -32,7 +32,7 @@ class MovieDaoJdbcImplTest {
         movie = new Movie();
         movie.setId(1);
         movie.setTitle("Test Movie");
-        movie.setYear("2023");
+        movie.setYear(2023);
     }
 
     @BeforeEach
@@ -68,7 +68,7 @@ class MovieDaoJdbcImplTest {
     void saveMovie() {
         movieDao.saveMovie(movie);
 
-        verify(jdbcTemplate).update(anyString(), eq(movie.getTitle()), eq(movie.getYear()));
+        verify(jdbcTemplate).update(anyString(), anyInt(), eq(movie.getTitle()), eq(movie.getYear()));
     }
 
     @Test
