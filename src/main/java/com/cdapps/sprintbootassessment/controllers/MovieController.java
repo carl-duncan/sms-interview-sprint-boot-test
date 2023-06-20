@@ -7,6 +7,7 @@ import com.cdapps.sprintbootassessment.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,16 +31,19 @@ public class MovieController {
         return movieService.getAllMovies(pageable);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @PostMapping
     public void createMovie(@RequestBody Movie movie) {
         movieService.saveMovie(movie);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @PutMapping
     public void updateMovie(@RequestBody Movie movie) {
         movieService.updateMovie(movie);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteMovie(@PathVariable int id) {
         movieService.deleteMovie(id);

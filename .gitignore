@@ -1,5 +1,8 @@
 HELP.md
 src/main/resources/application.properties
+src/main/resources/app.pub
+src/main/resources/app.key
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar

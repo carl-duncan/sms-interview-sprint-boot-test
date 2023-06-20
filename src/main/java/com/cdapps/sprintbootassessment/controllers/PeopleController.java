@@ -5,6 +5,7 @@ import com.cdapps.sprintbootassessment.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,16 +29,19 @@ public class PeopleController {
         return peopleService.getAllPeople(pageable);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @PostMapping
     public void createPerson(@RequestBody People person) {
         peopleService.savePerson(person);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @PutMapping
     public void updatePerson(@RequestBody People person) {
         peopleService.updatePerson(person);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @DeleteMapping("/{id}")
     public void deletePerson(@PathVariable int id) {
         peopleService.deletePerson(id);

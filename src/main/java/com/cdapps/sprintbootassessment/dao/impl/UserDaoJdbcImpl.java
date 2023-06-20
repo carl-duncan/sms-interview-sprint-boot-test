@@ -5,23 +5,25 @@ import com.cdapps.sprintbootassessment.models.User;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDaoJdbcImpl implements UserDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserDaoJdbcImpl(JdbcTemplate jdbcTemplate, BCryptPasswordEncoder passwordEncoder) {
+    public UserDaoJdbcImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.passwordEncoder = passwordEncoder;
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS test_users (" +
+                "id SERIAL PRIMARY KEY," +
+                "username VARCHAR(50)," +
+                "password VARCHAR(255)," +
+                "role VARCHAR(50))");
     }
 
     @Override
     public User findByUsername(String username) {
-        String sql = "SELECT * FROM users WHERE username = ?";
+        String sql = "SELECT * FROM test_users WHERE username = ?";
         try {
             return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);
         } catch (EmptyResultDataAccessException e) {
@@ -31,8 +33,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public void save(User user) {
-        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        String sql = "INSERT INTO test_users (username, password, role) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getRole().name());
     }
 }

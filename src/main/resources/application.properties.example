@@ -6,6 +6,6 @@ spring.jpa.hibernate.ddl-auto=create-drop
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.properties.hibernate.format_sql=true
-jwt.secret=
-jwt.expiration=100
+jwt.public.key=classpath:app.pub
+jwt.private.key=classpath:app.key
 
