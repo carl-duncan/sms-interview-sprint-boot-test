@@ -3,7 +3,7 @@ package com.cdapps.sprintbootassessment.models;
 public class Movie {
     private int id;
     private String title;
-    private String year;
+    private Integer year;
 
     public int getId() {
         return id;
@@ -21,11 +21,11 @@ public class Movie {
         this.title = title;
     }
 
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 }

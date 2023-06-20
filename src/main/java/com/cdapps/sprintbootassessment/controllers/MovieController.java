@@ -4,6 +4,7 @@ import com.cdapps.sprintbootassessment.models.Movie;
 import com.cdapps.sprintbootassessment.models.People;
 import com.cdapps.sprintbootassessment.models.Rating;
 import com.cdapps.sprintbootassessment.services.MovieService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/movies")
 public class MovieController {
 

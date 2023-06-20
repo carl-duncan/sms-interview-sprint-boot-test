@@ -19,16 +19,12 @@ package com.cdapps.sprintbootassessment.controllers;
 import com.cdapps.sprintbootassessment.dto.AuthenticationRequestDto;
 import com.cdapps.sprintbootassessment.dto.AuthenticationResponseDto;
 import com.cdapps.sprintbootassessment.services.UserService;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * A controller for the token resource.
- *
- * @author Josh Cummings
- */
 @RestController
 public class UserController {
 	final UserService userService;
@@ -37,11 +33,13 @@ public class UserController {
 	}
 
 	@PostMapping("/signIn")
+	@Hidden
 	public AuthenticationResponseDto signIn(Authentication authentication) {
 		return userService.generateToken(authentication);
 	}
 
 	@PostMapping("/signUp")
+	@Hidden
 	public void signUp(@RequestBody AuthenticationRequestDto dto) {
 		userService.saveUser(dto);
 	}
